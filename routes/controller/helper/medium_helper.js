@@ -47,7 +47,8 @@ addMediumToLog = function(object ,type,model,uid){
     }
 
     return ActionHelper.create(type,object,model).then(action => {
-         return MessageHelper.sendBulk(action._id,type,object).then(messageStatus => {
+         
+        return MessageHelper.sendBulk(action._id,type,object).then(messageStatus => {
             console.log("Message Status:"+messageStatus)
             if(messageStatus){
                 return Promise.resolve(true)

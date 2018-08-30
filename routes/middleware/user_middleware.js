@@ -15,12 +15,14 @@ const admin = function (req, res, next) {
     try {
         var decoded = jwt.verify(auth_token, 'khaled');
         console.log(decoded)
-      } catch(err) {
+      }
+      catch(err) {
         // err
         res.status(401).send({
             status: false,
             message:"You must be an admin"
         })
+        
       }
 
 

@@ -79,6 +79,24 @@ buildMessage = function(type,object){
             })
         });
     }
+    else if(type == 1003){
+        console.log("HEEEEEEEh")
+        return User.findById(object._creator).then(user => {
+            let type_mime = null ;
+            if(object.type == "Video"){
+                type_mime = "فيديو"
+            }
+            else{
+                type_mime = "صورة"
+            }
+
+            console.log(user)            
+            return Promise.resolve({
+                title: `تم الموافقة علي ال${type_mime} الخاص بك`,
+                description: `قام ${user.name} بالموافقه علي  ال${type_mime+" "}الخاص بك  `
+            })
+        });
+    }
 
 }
 
@@ -150,14 +168,14 @@ sendBulk = function(actionID,type,medium,uid){
     else if (type == 1002){
         // console.log(medium)
 
-        return Medium.findById(medium._id).then(medium => {
+        return Medium.findById(medium._id).then(medium_item => {
             // console.log(medium)
             return buildMessage(type,medium).then(notif => {
                 console.log(notif)
                 return new Log({
                     title:notif.title,
                     description:notif.description,
-                    _receiver:medium._id,
+                    _receiver:medium_item._creator ,
                     _action:actionID
                 }).save().then(log => {
                     return Promise.resolve(true)
@@ -169,7 +187,23 @@ sendBulk = function(actionID,type,medium,uid){
         })
     }
     else if(type == 1003){
+        return Medium.findById(medium._id).then( medium_item => {
 
+            return buildMessage(type,medium).then( notif => {
+                console.log(notif)
+                return new Log({
+                    title:notif.title,
+                    description:notif.description,
+                    _receiver:medium_item._creator,
+                    _action:actionID
+                }).save().then(log => {
+                    return Promise.resolve(true)
+                })
+            })
+        }).catch(err => {
+            console.log('error 1003: '+err)
+            return Promise.reject(false)
+        })
     }
     else if(type == 1004){
         return User.find().then(users => {

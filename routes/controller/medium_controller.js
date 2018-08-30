@@ -85,7 +85,7 @@ update = function(req,res,next){
                     console.log(updatedData.status)
                     helper.afterPost(medium,updatedData.status,'Medium',user._id).then(updateStatus => {
                         if(updateStatus){
-
+                            
                             if(updatedData.status == 1002) updatedData.status  = 1004
 
                             if(medium.status == 1004){
