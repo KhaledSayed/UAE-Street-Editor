@@ -80,7 +80,7 @@ buildMessage = function(type,object){
         });
     }
     else if(type == 1003){
-        console.log("HEEEEEEEh")
+        console.log("HEEEEEEEh-1003")
         return User.findById(object._creator).then(user => {
             let type_mime = null ;
             if(object.type == "Video"){
@@ -92,8 +92,8 @@ buildMessage = function(type,object){
 
             console.log(user)            
             return Promise.resolve({
-                title: `تم الموافقة علي ال${type_mime} الخاص بك`,
-                description: `قام ${user.name} بالموافقه علي  ال${type_mime+" "}الخاص بك  `
+                title: `تم رفض ال${type_mime} الخاص بك`,
+                description: `قام ${user.name} برفض  ال${type_mime+" "}الخاص بك  `
             })
         });
     }
