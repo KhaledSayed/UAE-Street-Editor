@@ -7,10 +7,11 @@ var helper = require('./helper/task_helper')
 
 
 getTasks = function(req,res){
-   
+    
     const params = _.pick(req.query,['done','_creator','_receiver'])
 
-    Task.find().then(tasks => {
+
+    Task.find(params).populate('_receiver','-tokens -password').then(tasks => {
         res.send({
             status:true,
             message:'reading tasks',
