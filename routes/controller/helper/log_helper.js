@@ -40,7 +40,7 @@ buildMessage = function(type,object){
             }
             return Promise.resolve({
                 title: `ميديا جديدة بانتظار المراجعة`,
-                description: `قام ${user.name} بنشر ${type_mime} جديد ينتظر المراجعة `
+                description: `قام ${user.name} بنشر ${type_mime} جديد بانتظار المراجعة `
             })
         });
     }
