@@ -38,6 +38,7 @@ post = function(req,res,next){
         let status = 1001
         if(user.type == "Moderator" || user.type == "Admin"){
             status = 1004
+            mediumParams.status = status
         }
 
         new Medium(mediumParams).save().then(medium => {

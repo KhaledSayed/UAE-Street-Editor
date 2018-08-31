@@ -210,9 +210,11 @@ sendBulk = function(actionID,type,medium,uid){
             let logs = []
 
             return Medium.findById(medium._id).then(mediumItem => {
-                return buildMessage(type,medium).then(notif => {
+                return buildMessage(type,mediumItem).then(notif => {
                     users.forEach(function(userItem){
-                        if(userItem._id != mediumItem._id){
+
+                        if(!userItem._id.equals(mediumItem._creator)){
+                            console.log()
                             logs.push({
                                 title:notif.title ,
                                 description:notif.description,
@@ -220,7 +222,9 @@ sendBulk = function(actionID,type,medium,uid){
                                 _action:actionID
                             })
                         }
+
                     })
+
                     console.log(logs.length)
     
                     return Log.insertMany(logs).then(manyLogs => {
