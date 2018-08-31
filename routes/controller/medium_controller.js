@@ -37,13 +37,13 @@ post = function(req,res,next){
         mediumParams._creator = req.body.user._id
         let statusCode = 1001
         
+        console.log(user.type)
         if(user.type == "Moderator" || user.type == "Admin"){
-            status = 1004
+            statusCode = 1004
             mediumParams.status = statusCode
         }
         else{
             mediumParams.status = statusCode
-
         }
 
         new Medium(mediumParams).save().then(medium => {

@@ -22,8 +22,7 @@ const mediumSchema = new Schema({
    },
    status: {
        type:Number , 
-       enum: [1001,1002,1003,1004,1005],
-       default:1001
+       enum: [1001,1002,1003,1004,1005]
    }
 })
 
