@@ -5,6 +5,7 @@ const NotificationHelper = require('./notification_helper')
 
 
 addTaskToLog = function(object ,type,model){
+    
     return ActionHelper.create(type,object,model).then(action => {
          return MessageHelper.sendMessage(action._id,type,object).then(messageStatus => {
             console.log("Message Status:"+messageStatus)
