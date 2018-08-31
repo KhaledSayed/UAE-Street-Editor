@@ -7,6 +7,8 @@ var helper = require('./helper/task_helper')
 
 
 getTasks = function(req,res){
+   
+    const params = _.pick(req.query,['done','_creator','_receiver'])
 
     Task.find().then(tasks => {
         res.send({
