@@ -209,30 +209,32 @@ sendBulk = function(actionID,type,medium,uid){
         return User.find().then(users => {
             let logs = []
 
-            return buildMessage(type,medium).then(notif => {
-                users.forEach(function(user){
-                    if(user._id != medium._id){
-                        logs.push({
-                            title:notif.title ,
-                            description:notif.description,
-                            _receiver:user._id,
-                            _action:actionID
-                        })
-                    }
+            return Medium.findById(medium._id).then(mediumItem => {
+                return buildMessage(type,medium).then(notif => {
+                    users.forEach(function(userItem){
+                        if(userItem._id != mediumItem._id){
+                            logs.push({
+                                title:notif.title ,
+                                description:notif.description,
+                                _receiver:userItem._id,
+                                _action:actionID
+                            })
+                        }
+                    })
+                    console.log(logs.length)
+    
+                    return Log.insertMany(logs).then(manyLogs => {
+                        return Promise.resolve(true)
+                    }).catch(error => {
+                        console.log(type,error)
+                        return Promise.reject(false)
+                    })
                 })
-                console.log(logs.length)
-
-                return Log.insertMany(logs).then(manyLogs => {
-                    return Promise.resolve(true)
-                }).catch(error => {
-                    console.log(type,error)
-                    return Promise.reject(false)
-                })
-            }).catch(err => {
+            })
+            .catch(err => {
                 console.log(type,err)
                 return Promise.reject(false)
             })
-            
 
         })
     }   
