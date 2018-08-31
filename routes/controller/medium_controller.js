@@ -35,9 +35,13 @@ post = function(req,res,next){
         const mediumParams = _.pick(req.body,['type','_section'])
         mediumParams.url = template
         mediumParams._creator = req.body.user._id
+        let status = 1001
+        if(user.type == "Moderator" || user.type == "Admin"){
+            status = 1004
+        }
 
         new Medium(mediumParams).save().then(medium => {
-            helper.afterPost(medium,1001,'Medium',medium._creator).then(status => {
+            helper.afterPost(medium,status,'Medium',medium._creator).then(status => {
                 if(status){
                     res.status(201).send({
                         status:true , 
