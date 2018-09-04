@@ -23,6 +23,16 @@ const mediumSchema = new Schema({
    status: {
        type:Number , 
        enum: [1001,1002,1003,1004,1005]
+   },
+   attributes:{
+       title:{
+           type:String,
+           default:null
+       },
+       description:{
+           type:String,
+            default:null
+       }
    }
 })
 

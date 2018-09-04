@@ -32,7 +32,12 @@ post = function(req,res,next){
             template = `${req.file.destination}${req.file.filename}`
         }
 
-        const mediumParams = _.pick(req.body,['type','_section'])
+        let mediumParams = _.pick(req.body,['type','_section'])
+        const mediumAttributes = _.pick(req.body,['title','description'])
+
+        mediumParams.attributes  = mediumAttributes
+
+
         mediumParams.url = template
         mediumParams._creator = req.body.user._id
         let statusCode = 1001
@@ -46,8 +51,10 @@ post = function(req,res,next){
             mediumParams.status = statusCode
         }
 
+
         new Medium(mediumParams).save().then(medium => {
-            helper.afterPost(medium,mediumParams.status,'Medium',medium._creator).then(status => {
+            console.log(medium)
+            helper.afterPost(medium,mediumParams,'Medium',medium._creator).then(status => {
                 if(status){
                     res.status(201).send({
                         status:true , 
