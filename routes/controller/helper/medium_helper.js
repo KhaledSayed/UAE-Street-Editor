@@ -40,13 +40,17 @@ getStorage = function(){
 
 //actionID,type,medium,uid
 
-addMediumToLog = function(object ,type,model,uid){
+addMediumToLog = function(object ,actionParams,model,uid){
     console.log(object)
     if(object._creator != uid){
         object._creator = uid
     }
 
-    return ActionHelper.create(type,object,model).then(action => {
+    let type = actionParams.status
+
+    
+
+    return ActionHelper.create(actionParams,object,model).then(action => {
          
         return MessageHelper.sendBulk(action._id,type,object).then(messageStatus => {
             console.log("Message Status:"+messageStatus)

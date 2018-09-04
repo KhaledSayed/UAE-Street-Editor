@@ -7,6 +7,10 @@ const actionSchema = new Schema({
         type: Number , 
         enum: [1001,1002,1003,1004,1005,2001,2002,2003,2004,3001]
     },
+    note:{
+        type:String ,
+        default: null
+    },
    options:{
         model: {
         type: Schema.Types.String

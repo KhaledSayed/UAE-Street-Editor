@@ -81,25 +81,30 @@ update = function(req,res,next){
     let template = null ;
 
     const medium_id = _.pick(req.body,['_id'])
-    const updatedData = _.pick(req.body,['status'])
+    const updatedData = _.pick(req.body,['status','note'])
     
+
     console.log(typeof updatedData.status)
     
     Medium.findById(medium_id).then(medium => {
             if(updatedData.status == 1002 || updatedData.status == 1003){
                 if(updatedData.status == 1002) updatedData.status  = 1004
+                console.log("Medium Creator:"+medium)
 
                 Medium.findOneAndUpdate(medium_id, {$set:updatedData }, {new: true}).then(medium => {
                     if(updatedData.status == 1004) updatedData.status  = 1002
 
                     console.log(updatedData.status)
-                    helper.afterPost(medium,updatedData.status,'Medium',user._id).then(updateStatus => {
+
+
+                    helper.afterPost(medium,updatedData,'Medium',user._id).then(updateStatus => {
                         if(updateStatus){
                             
                             if(updatedData.status == 1002) updatedData.status  = 1004
 
+
                             if(medium.status == 1004){
-                                helper.afterPost(medium,updatedData.status,'Medium',medium._creator).then(updateStatus2 => {
+                                helper.afterPost(medium,updatedData,'Medium',medium._creator).then(updateStatus2 => {
                                     if(updateStatus2 == true){
                                         res.status(201).send(medium)
                                     }
