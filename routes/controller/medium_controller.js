@@ -6,7 +6,7 @@ var middleware = require('../middleware/user_middleware')
 
 
 get = function(req,res){
-    const params = _.pick(req.query,['url','type','_creator','_section'])
+    const params = _.pick(req.query,['url','type','_creator','_section', 'attributes'])
     Medium.find(params).populate('_creator','-password').populate('_section').then( media => {
         res.status(200).send({
             status:true , 
@@ -33,7 +33,7 @@ post = function(req,res,next){
         }
 
         let mediumParams = _.pick(req.body,['type','_section'])
-        const mediumAttributes = _.pick(req.body,['title','description'])
+        const mediumAttributes = _.pick(req.body,['title','description', 'width', 'height'])
 
         mediumParams.attributes  = mediumAttributes
 

@@ -32,6 +32,14 @@ const mediumSchema = new Schema({
        description:{
            type:String,
             default:null
+       },
+       width:{
+           type: Number,
+           default: 0
+       },
+       height:{
+           type: Number,
+           default: 0
        }
    }
 })

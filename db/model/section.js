@@ -15,6 +15,14 @@ const sectionSchema = new Schema({
     template:{
         type: String ,
         required: true
+    },
+    width:{
+        type: Number,
+        default: 0
+    },
+    height:{
+        type: Number,
+        default: 0
     }
 });
 

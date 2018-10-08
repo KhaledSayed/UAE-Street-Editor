@@ -7,7 +7,7 @@ var middleware = require('../middleware/user_middleware')
 
 
 getSections = function(req,res){
-    const params = _.pick(req.query,['description','title','_id'])
+    const params = _.pick(req.query,['description','title','_id', 'width', 'height'])
     Section.find(params).then( sections => {
         res.status(200).send({
                 status:true , 
@@ -35,7 +35,7 @@ postSection = function(req,res,next){
         template = `${req.file.destination}${req.file.filename}`
     }
 
-    const sectionParams = _.pick(req.body,['title','description'])
+    const sectionParams = _.pick(req.body,['title','description', 'width', 'height'])
     sectionParams.template = template
 
     new Section(sectionParams).save().then(section => {
@@ -64,7 +64,7 @@ updateSection = function(req,res){
     }
 
     const section_id = _.pick(req.body,['_id'])
-    const updatedData = _.pick(req.body,['title','description'])
+    const updatedData = _.pick(req.body,['title','description', 'width', 'height'])
     updatedData.template = template
     console.log(updatedData)
     Section.findOneAndUpdate(section_id, {$set:updatedData}, {new: true}).then(section => {
