@@ -7,10 +7,10 @@ var middleware = require('../middleware/user_middleware')
 
 const createUser = function(req,res,next) {
 
-    if(middleware.admin(req,res,next) == next){
-        console.log("Real Admin , Next")
-        next()
-    }
+//     if(middleware.admin(req,res,next) == next){
+//         console.log("Real Admin , Next")
+//         next()
+//     }
 
     let avatar = null ;
 
