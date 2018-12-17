@@ -16,7 +16,7 @@ get = function(req, res) {
     .populate("_creator", "-password")
     .populate("_section")
     .then(media => {
-      let sortedMedia = _.orderBy(media, ["pinned"], ["desc"]);
+      let sortedMedia = _.orderBy(media, ["created_at","pinned"], ["desc"]);
       res.status(200).send({
         status: true,
         message: "Media Retreived succesfully",
@@ -160,7 +160,7 @@ pinned = function(req, res, next) {
     const medium_id = _.pick(req.body, ["_id"]);
     // const updatedData = _.pick(req.body, ["pinned"]);
 
-    console.log(typeof updatedData.status);
+//    console.log(typeof updatedData.status);
 
     Medium.findById(medium_id).then(medium => {
       Medium.findOneAndUpdate(
@@ -168,7 +168,7 @@ pinned = function(req, res, next) {
         { $set: { pinned: !medium.pinned } },
         { new: true }
       )
-        .then(medium => {})
+        .then(medium => { res.send(medium)})
         .catch(error => {
           res.status(500).send({ error: "Error" });
         });

@@ -15,6 +15,10 @@ app.use(
   UserController.helper.path,
   express.static(UserController.helper.express_path)
 );
+
+
+console.log(UserController.helper.path);
+console.log(UserController.helper.express_path);
 app.use(bodyParser.json());
 
 app.post(
@@ -69,4 +73,4 @@ app.put("/inbox", middleware.anyMember, InboxController.update);
 
 //============== End Of Inbox Section :D ============
 
-app.listen(3000, () => console.log("Example app listening on port 3000!"));
+app.listen(8080, () => console.log("Example app listening on port 3000!"));
